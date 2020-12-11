@@ -8,9 +8,9 @@
 
 ## Posibles incidencias
 
-### El contenedor no arranca al iniciar
+### El contenedor no arranca al reiniciar el servidor
 
-Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: always` y no le asignas otro valor, **ni siquiera `unless-stopped`**.
+Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: always` y no le asignas otro valor. **No, con `unless-stopped` no funciona**.
 
 # Cliente
 
@@ -26,7 +26,7 @@ Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: 
 
 Es posible que te ocurra lo siguiente: inicias la conexión a la VPN, todo va bien, pero al rato ya no conecta, y la única forma de que lo haga es reiniciando o el cliente o el servidor usando `wg-quick`. Si esto sucede, probablemente estás detrás de un NAT, con lo necesitas añadir `PersistentKeepalive = 25` en la sección `[Peer]` del fichero de configuración de tu interfaz de Wireguard (`wg0.conf`, por ejemplo). Con esto hacemos que se envíen mensajes *keep alive* cada 25 segundos, de forma que no se cierra la conexión TCP.
 
-### El servicio falla al iniciarse en boot time
+### El servicio falla al iniciarse en *boot time*
 
 La causa más probable es que `wg-quick` ya esté en marcha, con lo que vamos a hacer que el servicio se cargue este proceso cuando falle.
 La ruta al fichero del servicio es probablemente `/etc/systemd/system/multi-user.target.wants/wg-quick@wgX.service`, donde `X` será el número indicado en el fichero de configuración de Wireguard; si el fichero se llama `wg0.conf`, el servicio será `wg-quick@wg0.service`.
