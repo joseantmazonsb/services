@@ -54,7 +54,7 @@ Para montar un proxy inverso sencillo solo necesitamos añadir lo siguiente al f
 
 Finalmente, es **MUY IMPORTANTE** que añadamos una barra (`/`) seguida del puerto para evitar posibles errores de redirección.
 
-### Error al acceder a /socket u otras rutas
+### Error al acceder a `/socket` u otras rutas
 
 Si la aplicación a la que se está accediendo utiliza *websockets*,
 es posible que tengas que especificar un par de directivas `ProxyPass` y `ProxyPassReverse` más, de la siguiente forma:

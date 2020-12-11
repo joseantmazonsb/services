@@ -2,16 +2,25 @@
 
 ## Instalación
 
-1. Instalar wireguard: `apt update && apt install wireguard`.
+1. Instalar wireguard:
+    ```
+    apt update && apt install wireguard
+    ```
 2. Personalizar el fichero `docker-compose.yml` según las necesidades.
-3. Ejecutar `docker-compose up -d` para iniciar el contendor.
+3. Iniciar el contenedor:
+    ```
+    docker-compose up -d
+    ```
 4. Configurar proxy inverso adecuadamente.
 
 # Cliente
 
 ## Instalación
 
-1. Instalar wireguard: `apt update && apt install wireguard`.
+1. Instalar wireguard: 
+    ```
+    apt update && apt install wireguard
+    ```
 2. Navegar hasta la página web de vpn de nuestro servidor, hacer login, añadir nuestro cliente y descargar el fichero de configuración generado.
 3. Poner el fichero de configuración descargado dentro de la carpeta `/etc/wireguard`.
 4. Añadir el servicio a `systemd` para que se inicie al arrancar el equipo:
