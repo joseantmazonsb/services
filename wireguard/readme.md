@@ -5,12 +5,13 @@
 1. Instalar wireguard: `apt update && apt install wireguard`.
 2. Personalizar el fichero `docker-compose.yml` según las necesidades.
 3. Ejecutar `docker-compose up -d` para iniciar el contendor.
+4. Configurar proxy inverso adecuadamente.
 
 ## Posibles incidencias
 
 ### El contenedor no arranca al reiniciar el servidor
 
-Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: always` y no le asignas otro valor. **No, con `unless-stopped` no funciona**.
+Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: unless-stopped` o `restart: always`.
 
 # Cliente
 

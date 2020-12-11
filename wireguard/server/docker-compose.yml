@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  vpn:
+    image: "subspacecloud/subspace:latest"
+    container_name: vpn
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - SUBSPACE_HTTP_HOST=vpn.joseantmazonsb.com
+      - SUBSPACE_HTTP_ADDR=":8180"
+      - SUBSPACE_LETSENCRYPT="false" # reverse proxy takes care
+      - SUBSPACE_HTTP_INSECURE="true" # reverse proxy takes care
+    volumes:
+      - "${DATA_PATH:-/srv/vpn}:/data"
+      - "/usr/bin/wg:/usr/bin/wg"
+    network_mode: host
