@@ -13,7 +13,12 @@
 
 1. Instalar wireguard: `apt update && apt install wireguard`.
 2. Navegar hasta la página web de vpn de nuestro servidor, hacer login, añadir nuestro cliente y descargar el fichero de configuración generado.
-3. Poner el fichero de configuració descargado dentro de la carpeat `/etc/wireguard`.
+3. Poner el fichero de configuración descargado dentro de la carpeta `/etc/wireguard`.
+4. Añadir el servicio a `systemd` para que se inicie al arrancar el equipo:
+    ```
+    systemctl enable wg-quick@wgX.service
+    ```
+    *Nota: `X` será el número indicado en el fichero de configuración de Wireguard; si el fichero se llama `wg0.conf`, el servicio será `wg-quick@wg0.service`.*
 
 ## Posibles incidencias
 
@@ -24,10 +29,10 @@ Es posible que te ocurra lo siguiente: inicias la conexión a la VPN, todo va bi
 ### El servicio falla al iniciarse en *boot time*
 
 La causa más probable es que `wg-quick` ya esté en marcha, con lo que vamos a hacer que el servicio se cargue este proceso cuando falle.
-La ruta al fichero del servicio es probablemente `/etc/systemd/system/multi-user.target.wants/wg-quick@wgX.service`, donde `X` será el número indicado en el fichero de configuración de Wireguard; si el fichero se llama `wg0.conf`, el servicio será `wg-quick@wg0.service`.
+La ruta al fichero del servicio es probablemente `/etc/systemd/system/multi-user.target.wants/wg-quick@wgX.service`.
 No obstante, si no encontramos el fichero de servicio, siempre podemos usar `find`:
 ```
-find / -name wg0.service
+find / -name wgX.service
 ```
 Una vez tenemos el fichero del servicio localizado, hay que añadir la línea `ExecStopPost=/usr/bin/wg-quick down %i` en la sección `[Services]` y ejecutar el comando `systemctl daemon-reload` para actualizar el servicio. Así, la próxima vez que lo iniciemos hará `wg-quick down` en caso de fallo, asegurando que es `systemd` quien se encarga de manejar la conexión.
 
