@@ -1,0 +1,42 @@
+version: "3.2"
+services:
+  db:
+    image: mariadb:latest
+    container_name: nextcloud_db
+    restart: unless-stopped
+    volumes:
+      - "${DB_PATH:-/media/raid1/nextcloud/db}:/var/lib/mysql"
+    env_file:
+      - db.env
+    secrets:
+      - mysql_root_pwd
+      - mysql_db
+      - mysql_user
+      - mysql_pwd
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+      - "${NEXTCLOUD_CONFIG_PATH:-/srv/nextcloud/app}:/var/www/html"
+      - "${NEXTCLOUD_DATA_PATH:-/media/raid1/nextcloud/data}:/var/www/html/data"
+    ports:
+      - 8080:80
+    env_file:
+      - db.env
+      - nextcloud.env
+    secrets:
+      - mysql_db
+      - mysql_user
+      - mysql_pwd
+secrets:
+  mysql_root_pwd:
+    file: ./secrets/mysql_root_pwd.txt # put mysql root pwd to this file
+  mysql_db:
+    file: ./secrets/mysql_db.txt # put mysql db name to this file
+  mysql_pwd:
+    file: ./secrets/mysql_pwd.txt # put mysql password to this file
+  mysql_user:
+    file: ./secrets/mysql_user.txt # put mysql username to this file

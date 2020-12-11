@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  jellyfin:
+    image: "jellyfin/jellyfin:latest"
+    container_name: jellyfin
+    restart: unless-stopped
+    user: 0:0 # root
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://jellyfin.joseantmazonsb.com
+    volumes:
+      - "${CONFIG_PATH:-/srv/jellyfin/config}:/config"
+      - "${CACHE_PATH:-/srv/jellyfin/cache}:/cache"
+      - "/media/disk1:/media1:ro"
+      - "/media/disk2:/media2:ro"
+    #network_mode: host # Needed for DLNA
+    ports:
+      - "8096:8096"
+      #- "8920:8920" # reverse proxy takes care of security
+    devices: 
+      - "/dev/dri:/dev/dri"

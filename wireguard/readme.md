@@ -7,12 +7,6 @@
 3. Ejecutar `docker-compose up -d` para iniciar el contendor.
 4. Configurar proxy inverso adecuadamente.
 
-## Posibles incidencias
-
-### El contenedor no arranca al reiniciar el servidor
-
-Si modificas el fichero `docker-compose.yml`, asegúrate de que dejas `restart: unless-stopped` o `restart: always`.
-
 # Cliente
 
 ## Instalación
