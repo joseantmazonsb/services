@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  easywall:
+    image: easywall
+    build:
+      context: .
+    container_name: easywall
+    restart: unless-stopped
+    ports: "12227:12227"
+    volumes:
+      - "/usr/sbin/iptables:/usr/sbin/iptables"
+      - "/dev/log:/dev/log"
